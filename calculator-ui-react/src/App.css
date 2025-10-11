@@ -1,0 +1,112 @@
+:root {
+  --background-color: #282c34;
+  --display-background: #1c1f25;
+  --button-bg: #4b5269;
+  --button-hover-bg: #5c6580;
+  --operator-button-bg: #ff9f0a;
+  --operator-button-hover-bg: #ffb03a;
+  --special-button-bg: #6d7a9e;
+  --special-button-hover-bg: #7e8ab8;
+  --text-color: #ffffff;
+  --display-primary-color: #ffffff;
+  --display-secondary-color: #a0a0a0;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+}
+
+#root {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.calculator {
+  background-color: var(--display-background);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.display {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: var(--display-background);
+  border: none;
+  border-radius: 12px;
+  text-align: right;
+  color: var(--display-primary-color);
+}
+
+.secondary-display {
+  min-height: 30px;
+  font-size: 1.2em;
+  color: var(--display-secondary-color);
+  margin-bottom: 5px;
+  word-wrap: break-word;
+}
+
+.primary-display {
+  min-height: 60px;
+  font-size: 2.5em;
+  font-weight: bold;
+  word-wrap: break-word;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  font-size: 1.5em;
+  border: none;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  background-color: var(--button-bg);
+  color: var(--text-color);
+  transition: background-color 0.2s;
+  outline: none;
+}
+
+button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+button.operator {
+  background-color: var(--operator-button-bg);
+}
+
+button.operator:hover {
+  background-color: var(--operator-button-hover-bg);
+}
+
+button.special {
+  background-color: var(--special-button-bg);
+}
+
+button.special:hover {
+  background-color: var(--special-button-hover-bg);
+}
+
+button.equals {
+  grid-column: span 2;
+  background-color: var(--operator-button-bg);
+}
+
+button.equals:hover {
+  background-color: var(--operator-button-hover-bg);
+}

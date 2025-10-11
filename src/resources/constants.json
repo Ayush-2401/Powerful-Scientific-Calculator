@@ -1,0 +1,103 @@
+{
+  "mathematical": [
+    {
+      "name": "PI",
+      "value": 3.141592653589793,
+      "description": "Pi, ratio of a circle's circumference to its diameter."
+    },
+    {
+      "name": "E",
+      "value": 2.718281828459045,
+      "description": "Euler's number, base of the natural logarithm."
+    },
+    {
+      "name": "PHI",
+      "value": 1.618033988749895,
+      "description": "Golden Ratio."
+    }
+  ],
+  "physical": [
+    {
+      "name": "C",
+      "value": 299792458.0,
+      "description": "Speed of light in vacuum (m/s)."
+    },
+    {
+      "name": "G_GRAV",
+      "value": 6.6743e-11,
+      "description": "Newtonian constant of gravitation (N m^2/kg^2)."
+    },
+    {
+      "name": "H_PLANCK",
+      "value": 6.62607015e-34,
+      "description": "Planck constant (J s)."
+    },
+    {
+      "name": "KB",
+      "value": 1.380649e-23,
+      "description": "Boltzmann constant (J/K)."
+    },
+    {
+      "name": "E_CHARGE",
+      "value": 1.602176634e-19,
+      "description": "Elementary charge (C)."
+    },
+    {
+      "name": "ME",
+      "value": 9.1093837015e-31,
+      "description": "Electron mass (kg)."
+    },
+    {
+      "name": "MP",
+      "value": 1.67262192e-27,
+      "description": "Proton mass (kg)."
+    },
+    {
+      "name": "MN",
+      "value": 1.67492749e-27,
+      "description": "Neutron mass (kg)."
+    },
+    {
+      "name": "A0",
+      "value": 5.29177210e-11,
+      "description": "Bohr radius (m)."
+    },
+    {
+      "name": "RY",
+      "value": 10973731.568,
+      "description": "Rydberg constant (m^-1)."
+    },
+    {
+      "name": "SIGMA",
+      "value": 5.670374419e-8,
+      "description": "Stefan-Boltzmann constant (W m^-2 K^-4)."
+    },
+    {
+      "name": "G0",
+      "value": 9.80665,
+      "description": "Standard gravitational acceleration (m/s^2)."
+    }
+  ],
+  "chemical": [
+    {
+      "name": "NA",
+      "value": 6.02214076e23,
+      "description": "Avogadro constant (mol^-1)."
+    },
+    {
+      "name": "R",
+      "value": 8.314462618,
+      "description": "Molar gas constant (J/(mol K))."
+    },
+    {
+      "name": "F",
+      "value": 96485.33212,
+      "description": "Faraday constant (C/mol)."
+    },
+    {
+      "name": "U",
+      "value": 1.66053906660e-27,
+      "description": "Atomic mass unit (kg)."
+    }
+  ]
+}
