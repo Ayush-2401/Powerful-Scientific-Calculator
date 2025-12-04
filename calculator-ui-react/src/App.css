@@ -17,41 +17,71 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
-  background-color: var(--background-color);
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-}
-
-#root {
-  width: 100%;
-  max-width: 400px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
 
+:root {
+  --bg-color: #1e1e1e;
+  --display-bg: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #aaaaaa;
+  --btn-bg-num: #3d3d3d;
+  --btn-bg-op: #ff9f0a;
+  --btn-bg-special: #a5a5a5;
+  --btn-text-num: #ffffff;
+  --btn-text-special: #000000;
+  --btn-hover: rgba(255, 255, 255, 0.1);
+}
+
+body {
+  background-color: #121212;
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.calculator-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 .calculator {
-  background-color: var(--display-background);
-  border-radius: 16px;
+  background-color: var(--bg-color);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   padding: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .display {
-  width: 100%;
+  background-color: var(--display-bg);
+  border-radius: 10px;
   padding: 20px;
-  box-sizing: border-box;
-  background-color: var(--display-background);
-  border: none;
-  border-radius: 12px;
   text-align: right;
-  color: var(--display-primary-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100px;
+  overflow: hidden;
 }
 
 .secondary-display {
-  min-height: 30px;
-  font-size: 1.2em;
-  color: var(--display-secondary-color);
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  min-height: 1.5rem;
   margin-bottom: 5px;
   word-wrap: break-word;
 }
@@ -109,4 +139,71 @@ button.equals {
 
 button.equals:hover {
   background-color: var(--operator-button-hover-bg);
+}
+
+/* Mode Selector */
+.mode-selector {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.mode-selector button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.mode-selector button.active {
+  background-color: #007bff;
+}
+
+.mode-selector button:hover {
+  background-color: #444;
+}
+
+/* Solver Inputs */
+.solver-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  background-color: #222;
+  border-radius: 15px;
+}
+
+.solver-inputs h3 {
+  color: #fff;
+  text-align: center;
+  margin-top: 0;
+}
+
+.solver-inputs input {
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #444;
+  background-color: #333;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.solver-inputs button {
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.solver-inputs button:hover {
+  background-color: #218838;
 }

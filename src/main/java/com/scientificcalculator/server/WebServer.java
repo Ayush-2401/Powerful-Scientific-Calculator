@@ -13,12 +13,15 @@ import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 
 public class WebServer {
 
     private static final int PORT = 8080;
-    private final CalculatorEngine engine = new CalculatorEngine();
+    // Session storage: Map<SessionID, CalculatorEngine>
+    private final Map<String, CalculatorEngine> sessionEngines = new ConcurrentHashMap<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public static void main(String[] args) throws IOException {
@@ -28,7 +31,7 @@ public class WebServer {
     public void start() throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
         server.createContext("/api/calculate", new CalculateHandler());
-        server.setExecutor(Executors.newSingleThreadExecutor());
+        server.setExecutor(Executors.newCachedThreadPool()); // Use cached thread pool for better concurrency
         server.start();
         System.out.println("Server started on port " + PORT);
     }
@@ -36,23 +39,39 @@ public class WebServer {
     class CalculateHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            if ("POST".equals(exchange.getRequestMethod()) || "OPTIONS".equals(exchange.getRequestMethod())) {
-                // Set CORS headers for all responses
-                exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*"); // Allow any origin
-                exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "POST, OPTIONS");
-                exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type");
+            // Handle CORS for all requests
+            exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "POST, OPTIONS");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type, X-Session-ID");
 
-                // Respond to preflight OPTIONS request
-                if ("OPTIONS".equals(exchange.getRequestMethod())) {
-                    exchange.sendResponseHeaders(204, -1); // No Content
-                    return;
-                }
+            if ("OPTIONS".equals(exchange.getRequestMethod())) {
+                exchange.sendResponseHeaders(204, -1);
+                return;
+            }
 
+            if ("POST".equals(exchange.getRequestMethod())) {
                 try (InputStream is = exchange.getRequestBody()) {
-                    // Read the request body
-                    String requestBody = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+                    // 1. Get Session ID from Header
+                    String sessionId = exchange.getRequestHeaders().getFirst("X-Session-ID");
 
-                    // Parse the command from the JSON request
+                    // If no session ID provided, generate one (or treat as error depending on
+                    // policy)
+                    // For this app, we'll require the frontend to generate/store it, or we return a
+                    // new one.
+                    // Simpler approach: If missing, create a new engine but warn.
+                    if (sessionId == null || sessionId.isEmpty()) {
+                        System.out.println("Warning: No Session ID provided. Creating temporary session.");
+                        sessionId = UUID.randomUUID().toString();
+                    }
+
+                    // 2. Get or Create Engine for this Session
+                    CalculatorEngine engine = sessionEngines.computeIfAbsent(sessionId, id -> {
+                        System.out.println("Creating new CalculatorEngine for session: " + id);
+                        return new CalculatorEngine();
+                    });
+
+                    // 3. Parse Request
+                    String requestBody = new String(is.readAllBytes(), StandardCharsets.UTF_8);
                     Map<String, String> requestMap = objectMapper.readValue(requestBody, HashMap.class);
                     String command = requestMap.get("command");
 
@@ -61,21 +80,24 @@ public class WebServer {
                         return;
                     }
 
-                    // Process the command using the calculator engine
+                    // 4. Process Command
                     String[] displayUpdates = engine.processCommand(command);
 
-                    // Prepare the JSON response
+                    // 5. Prepare Response
                     Map<String, String> responseMap = new HashMap<>();
                     responseMap.put("primaryDisplay", displayUpdates[0]);
                     responseMap.put("secondaryDisplay", displayUpdates[1]);
+                    // Echo back the session ID so the client can store it if it was new (optional,
+                    // but good practice)
+                    responseMap.put("sessionId", sessionId);
+
                     String jsonResponse = objectMapper.writeValueAsString(responseMap);
 
-                    // Send the response
                     sendResponse(exchange, 200, jsonResponse);
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    sendResponse(exchange, 500, "{\"error\":'Internal server error'}");
+                    sendResponse(exchange, 500, "{\"error\":'Internal server error: " + e.getMessage() + "'}");
                 }
             } else {
                 sendResponse(exchange, 405, "{\"error\":'Method not allowed'}");

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="test.ReproductionTest" time="0.205" tests="6" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="22"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="C:\Users\2401a\OneDrive\Desktop\Projects\ScientificCalculatorV1\target\test-classes;C:\Users\2401a\OneDrive\Desktop\Projects\ScientificCalculatorV1\target\classes;C:\Users\2401a\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.13.3\jackson-databind-2.13.3.jar;C:\Users\2401a\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.13.3\jackson-annotations-2.13.3.jar;C:\Users\2401a\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.13.3\jackson-core-2.13.3.jar;C:\Users\2401a\.m2\repository\org\jfree\jfreechart\1.0.19\jfreechart-1.0.19.jar;C:\Users\2401a\.m2\repository\org\jfree\jcommon\1.0.23\jcommon-1.0.23.jar;C:\Users\2401a\.m2\repository\org\jzy3d\jzy3d-core\2.0.0\jzy3d-core-2.0.0.jar;C:\Users\2401a\.m2\repository\org\jzy3d\jzy3d-jdt-core\2.0.0\jzy3d-jdt-core-2.0.0.jar;C:\Users\2401a\.m2\repository\commons-io\commons-io\2.7\commons-io-2.7.jar;C:\Users\2401a\.m2\repository\org\apache\commons\commons-lang3\3.1\commons-lang3-3.1.jar;C:\Users\2401a\.m2\repository\org\smurn\jply\0.2.1\jply-0.2.1.jar;C:\Users\2401a\.m2\repository\net\sf\opencsv\opencsv\2.1\opencsv-2.1.jar;C:\Users\2401a\.m2\repository\org\tallison\jmatio\1.5\jmatio-1.5.jar;C:\Users\2401a\.m2\repository\org\slf4j\slf4j-api\1.7.25\slf4j-api-1.7.25.jar;C:\Users\2401a\.m2\repository\com\google\guava\guava\30.1.1-jre\guava-30.1.1-jre.jar;C:\Users\2401a\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\2401a\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\2401a\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\2401a\.m2\repository\org\checkerframework\checker-qual\3.8.0\checker-qual-3.8.0.jar;C:\Users\2401a\.m2\repository\com\google\errorprone\error_prone_annotations\2.5.1\error_prone_annotations-2.5.1.jar;C:\Users\2401a\.m2\repository\com\google\j2objc\j2objc-annotations\1.3\j2objc-annotations-1.3.jar;C:\Users\2401a\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\2401a\.m2\repository\org\apache\logging\log4j\log4j-api\2.17.0\log4j-api-2.17.0.jar;C:\Users\2401a\.m2\repository\org\apache\logging\log4j\log4j-core\2.17.0\log4j-core-2.17.0.jar;C:\Users\2401a\.m2\repository\org\jzy3d\jzy3d-native-jogl-awt\2.0.0\jzy3d-native-jogl-awt-2.0.0.jar;C:\Users\2401a\.m2\repository\org\jzy3d\jzy3d-core-awt\2.0.0\jzy3d-core-awt-2.0.0.jar;C:\Users\2401a\.m2\repository\org\jzy3d\jzy3d-native-jogl-core\2.0.0\jzy3d-native-jogl-core-2.0.0.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt-main\2.3.2\gluegen-rt-main-2.3.2.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-android-aarch64.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-android-armv6.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-linux-amd64.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-linux-armv6.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-linux-armv6hf.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-linux-i586.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-macosx-universal.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-solaris-amd64.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-solaris-i586.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-windows-amd64.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-windows-i586.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all-main\2.3.2\jogl-all-main-2.3.2.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-android-aarch64.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-android-armv6.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-linux-amd64.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-linux-armv6.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-linux-armv6hf.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-linux-i586.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-macosx-universal.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-solaris-amd64.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-solaris-i586.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-windows-amd64.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-windows-i586.jar;C:\Users\2401a\.m2\repository\org\jzy3d\jzy3d-native-jogl-core\2.0.0\jzy3d-native-jogl-core-2.0.0-tests.jar;C:\Users\2401a\.m2\repository\org\junit\jupiter\junit-jupiter\5.9.2\junit-jupiter-5.9.2.jar;C:\Users\2401a\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.2\junit-jupiter-api-5.9.2.jar;C:\Users\2401a\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\2401a\.m2\repository\org\junit\platform\junit-platform-commons\1.9.2\junit-platform-commons-1.9.2.jar;C:\Users\2401a\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\2401a\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.2\junit-jupiter-params-5.9.2.jar;C:\Users\2401a\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.2\junit-jupiter-engine-5.9.2.jar;C:\Users\2401a\.m2\repository\org\junit\platform\junit-platform-engine\1.9.2\junit-platform-engine-1.9.2.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="Asia/Calcutta"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="22"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="IN"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-22\bin"/>
+    <property name="sun.java.command" value="C:\Users\2401a\AppData\Local\Temp\surefire11947334362740560901\surefirebooter-20251205033840861_3.jar C:\Users\2401a\AppData\Local\Temp\surefire11947334362740560901 2025-12-05T03-38-40_752-jvmRun1 surefire-20251205033840861_1tmp surefire_0-20251205033840861_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="test" value="ReproductionTest"/>
+    <property name="surefire.test.class.path" value="C:\Users\2401a\OneDrive\Desktop\Projects\ScientificCalculatorV1\target\test-classes;C:\Users\2401a\OneDrive\Desktop\Projects\ScientificCalculatorV1\target\classes;C:\Users\2401a\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.13.3\jackson-databind-2.13.3.jar;C:\Users\2401a\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.13.3\jackson-annotations-2.13.3.jar;C:\Users\2401a\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.13.3\jackson-core-2.13.3.jar;C:\Users\2401a\.m2\repository\org\jfree\jfreechart\1.0.19\jfreechart-1.0.19.jar;C:\Users\2401a\.m2\repository\org\jfree\jcommon\1.0.23\jcommon-1.0.23.jar;C:\Users\2401a\.m2\repository\org\jzy3d\jzy3d-core\2.0.0\jzy3d-core-2.0.0.jar;C:\Users\2401a\.m2\repository\org\jzy3d\jzy3d-jdt-core\2.0.0\jzy3d-jdt-core-2.0.0.jar;C:\Users\2401a\.m2\repository\commons-io\commons-io\2.7\commons-io-2.7.jar;C:\Users\2401a\.m2\repository\org\apache\commons\commons-lang3\3.1\commons-lang3-3.1.jar;C:\Users\2401a\.m2\repository\org\smurn\jply\0.2.1\jply-0.2.1.jar;C:\Users\2401a\.m2\repository\net\sf\opencsv\opencsv\2.1\opencsv-2.1.jar;C:\Users\2401a\.m2\repository\org\tallison\jmatio\1.5\jmatio-1.5.jar;C:\Users\2401a\.m2\repository\org\slf4j\slf4j-api\1.7.25\slf4j-api-1.7.25.jar;C:\Users\2401a\.m2\repository\com\google\guava\guava\30.1.1-jre\guava-30.1.1-jre.jar;C:\Users\2401a\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\2401a\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\2401a\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\2401a\.m2\repository\org\checkerframework\checker-qual\3.8.0\checker-qual-3.8.0.jar;C:\Users\2401a\.m2\repository\com\google\errorprone\error_prone_annotations\2.5.1\error_prone_annotations-2.5.1.jar;C:\Users\2401a\.m2\repository\com\google\j2objc\j2objc-annotations\1.3\j2objc-annotations-1.3.jar;C:\Users\2401a\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\2401a\.m2\repository\org\apache\logging\log4j\log4j-api\2.17.0\log4j-api-2.17.0.jar;C:\Users\2401a\.m2\repository\org\apache\logging\log4j\log4j-core\2.17.0\log4j-core-2.17.0.jar;C:\Users\2401a\.m2\repository\org\jzy3d\jzy3d-native-jogl-awt\2.0.0\jzy3d-native-jogl-awt-2.0.0.jar;C:\Users\2401a\.m2\repository\org\jzy3d\jzy3d-core-awt\2.0.0\jzy3d-core-awt-2.0.0.jar;C:\Users\2401a\.m2\repository\org\jzy3d\jzy3d-native-jogl-core\2.0.0\jzy3d-native-jogl-core-2.0.0.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt-main\2.3.2\gluegen-rt-main-2.3.2.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-android-aarch64.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-android-armv6.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-linux-amd64.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-linux-armv6.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-linux-armv6hf.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-linux-i586.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-macosx-universal.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-solaris-amd64.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-solaris-i586.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-windows-amd64.jar;C:\Users\2401a\.m2\repository\org\jogamp\gluegen\gluegen-rt\2.3.2\gluegen-rt-2.3.2-natives-windows-i586.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all-main\2.3.2\jogl-all-main-2.3.2.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-android-aarch64.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-android-armv6.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-linux-amd64.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-linux-armv6.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-linux-armv6hf.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-linux-i586.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-macosx-universal.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-solaris-amd64.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-solaris-i586.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-windows-amd64.jar;C:\Users\2401a\.m2\repository\org\jogamp\jogl\jogl-all\2.3.2\jogl-all-2.3.2-natives-windows-i586.jar;C:\Users\2401a\.m2\repository\org\jzy3d\jzy3d-native-jogl-core\2.0.0\jzy3d-native-jogl-core-2.0.0-tests.jar;C:\Users\2401a\.m2\repository\org\junit\jupiter\junit-jupiter\5.9.2\junit-jupiter-5.9.2.jar;C:\Users\2401a\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.2\junit-jupiter-api-5.9.2.jar;C:\Users\2401a\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\2401a\.m2\repository\org\junit\platform\junit-platform-commons\1.9.2\junit-platform-commons-1.9.2.jar;C:\Users\2401a\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\2401a\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.2\junit-jupiter-params-5.9.2.jar;C:\Users\2401a\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.2\junit-jupiter-engine-5.9.2.jar;C:\Users\2401a\.m2\repository\org\junit\platform\junit-platform-engine\1.9.2\junit-platform-engine-1.9.2.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\2401a"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2024-04-16"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-22"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="C:\Users\2401a\OneDrive\Desktop\Projects\ScientificCalculatorV1"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\2401a\AppData\Local\Temp\surefire11947334362740560901\surefirebooter-20251205033840861_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="22.0.1+8-16"/>
+    <property name="user.name" value="2401a"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\2401a\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\2401a\AppData\Local\Temp\"/>
+    <property name="java.version" value="22.0.1"/>
+    <property name="user.dir" value="C:\Users\2401a\OneDrive\Desktop\Projects\ScientificCalculatorV1"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-22\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\sqlite3;C:\Program Files\nodejs\;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Git\cmd;C:\Program Files\apache-maven-3.9.11\bin;C:\Users\2401a\.cargo\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\2401a\AppData\Local\Microsoft\WindowsApps;;C:\Users\2401a\AppData\Local\spicetify;C:\Users\2401a\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\2401a\AppData\Roaming\npm;C:\Users\2401a\AppData\Local\Programs\Antigravity\bin;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="22.0.1+8-16"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="66.0"/>
+  </properties>
+  <testcase name="testNegativeFiveMinusFive" classname="test.ReproductionTest" time="0.17">
+    <system-out><![CDATA[ConstantsLoader: Initiating constants loading process...
+ConstantsLoader: Cache loaded from C:\Users\2401a/.scientific_calculator/cached_constants.json
+ConstantsLoader Debug: Constants loaded from cache: 19 constants.
+ConstantsLoader: Constants loaded successfully from local cache.
+Engine processing command: -
+  Primary Display: 0
+  Secondary Display: -
+  Infix Tokens: [-]
+  Last Num: false, Last Op: true, Last Const: false, Last Eq: false
+Engine processing command: 5
+  Primary Display: -5
+  Secondary Display: -5
+  Infix Tokens: [-5]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: false
+Engine processing command: -
+  Primary Display: 0
+  Secondary Display: -5 -
+  Infix Tokens: [-5, -]
+  Last Num: false, Last Op: true, Last Const: false, Last Eq: false
+Engine processing command: 5
+  Primary Display: 5
+  Secondary Display: -5 - 5
+  Infix Tokens: [-5, -, 5]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: false
+Engine processing command: =
+InfixToPostfixConverter Debug: Processing token: '-5' (Last Token Type: START)
+InfixToPostfixConverter Debug:   - Identified as NUMERIC
+InfixToPostfixConverter Debug: Processing token: '-' (Last Token Type: NUMBER)
+InfixToPostfixConverter Debug:   - Identified as OPERATOR
+InfixToPostfixConverter Debug: Processing token: '5' (Last Token Type: OPERATOR)
+InfixToPostfixConverter Debug:   - Identified as NUMERIC
+InfixToPostfixConverter Debug: Infix: [-5, -, 5] -> Postfix: [-5, 5, -]
+PostfixEvaluator Debug: Starting evaluation for tokens: [-5, 5, -]
+PostfixEvaluator Debug:   Processing token: '-5'
+PostfixEvaluator Debug:     -> Pushed Number: -5. Current Stack: [-5]
+PostfixEvaluator Debug:   End of token processing. Stack: [-5]
+PostfixEvaluator Debug:   Processing token: '5'
+PostfixEvaluator Debug:     -> Pushed Number: 5. Current Stack: [-5, 5]
+PostfixEvaluator Debug:   End of token processing. Stack: [-5, 5]
+PostfixEvaluator Debug:   Processing token: '-'
+PostfixEvaluator Debug:     - Identified as OPERATOR: - (Type: BINARY)
+PostfixEvaluator Debug:     - Popped for binary op: -5, 5
+PostfixEvaluator Debug:     -> Pushed Binary Result: -10. Current Stack: [-10]
+PostfixEvaluator Debug:   End of token processing. Stack: [-10]
+PostfixEvaluator Debug: Evaluation complete. Final stack size: 1. Final Stack: [-10]
+  Primary Display: -10
+  Secondary Display: -10 =
+  Infix Tokens: [-10]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: true
+]]></system-out>
+  </testcase>
+  <testcase name="testImplicitMultiplication_NoBracket" classname="test.ReproductionTest" time="0.002">
+    <system-out><![CDATA[Engine processing command: 2
+  Primary Display: 2
+  Secondary Display: 2
+  Infix Tokens: [2]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: false
+Engine processing command: 3
+  Primary Display: 23
+  Secondary Display: 23
+  Infix Tokens: [23]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: false
+Engine processing command: =
+InfixToPostfixConverter Debug: Processing token: '23' (Last Token Type: START)
+InfixToPostfixConverter Debug:   - Identified as NUMERIC
+InfixToPostfixConverter Debug: Infix: [23] -> Postfix: [23]
+PostfixEvaluator Debug: Starting evaluation for tokens: [23]
+PostfixEvaluator Debug:   Processing token: '23'
+PostfixEvaluator Debug:     -> Pushed Number: 23. Current Stack: [23]
+PostfixEvaluator Debug:   End of token processing. Stack: [23]
+PostfixEvaluator Debug: Evaluation complete. Final stack size: 1. Final Stack: [23]
+  Primary Display: 23
+  Secondary Display: 23 =
+  Infix Tokens: [23]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: true
+]]></system-out>
+  </testcase>
+  <testcase name="testImplicitMultiplication_WithBracket" classname="test.ReproductionTest" time="0.004">
+    <system-out><![CDATA[Engine processing command: 2
+  Primary Display: 2
+  Secondary Display: 2
+  Infix Tokens: [2]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: false
+Engine processing command: (
+  Primary Display: 0
+  Secondary Display: 2 * (
+  Infix Tokens: [2, *, (]
+  Last Num: false, Last Op: true, Last Const: false, Last Eq: false
+Engine processing command: 3
+  Primary Display: 3
+  Secondary Display: 2 * ( 3
+  Infix Tokens: [2, *, (, 3]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: false
+Engine processing command: )
+  Primary Display: 0
+  Secondary Display: 2 * ( 3 )
+  Infix Tokens: [2, *, (, 3, )]
+  Last Num: false, Last Op: true, Last Const: false, Last Eq: false
+Engine processing command: =
+InfixToPostfixConverter Debug: Processing token: '2' (Last Token Type: START)
+InfixToPostfixConverter Debug:   - Identified as NUMERIC
+InfixToPostfixConverter Debug: Processing token: '*' (Last Token Type: NUMBER)
+InfixToPostfixConverter Debug:   - Identified as OPERATOR
+InfixToPostfixConverter Debug: Processing token: '(' (Last Token Type: OPERATOR)
+InfixToPostfixConverter Debug:   - Identified as OPERATOR
+InfixToPostfixConverter Debug: Processing token: '3' (Last Token Type: PAREN_OPEN)
+InfixToPostfixConverter Debug:   - Identified as NUMERIC
+InfixToPostfixConverter Debug: Processing token: ')' (Last Token Type: NUMBER)
+InfixToPostfixConverter Debug:   - Identified as OPERATOR
+InfixToPostfixConverter Debug: Infix: [2, *, (, 3, )] -> Postfix: [2, 3, *]
+PostfixEvaluator Debug: Starting evaluation for tokens: [2, 3, *]
+PostfixEvaluator Debug:   Processing token: '2'
+PostfixEvaluator Debug:     -> Pushed Number: 2. Current Stack: [2]
+PostfixEvaluator Debug:   End of token processing. Stack: [2]
+PostfixEvaluator Debug:   Processing token: '3'
+PostfixEvaluator Debug:     -> Pushed Number: 3. Current Stack: [2, 3]
+PostfixEvaluator Debug:   End of token processing. Stack: [2, 3]
+PostfixEvaluator Debug:   Processing token: '*'
+PostfixEvaluator Debug:     - Identified as OPERATOR: * (Type: BINARY)
+PostfixEvaluator Debug:     - Popped for binary op: 2, 3
+PostfixEvaluator Debug:     -> Pushed Binary Result: 6. Current Stack: [6]
+PostfixEvaluator Debug:   End of token processing. Stack: [6]
+PostfixEvaluator Debug: Evaluation complete. Final stack size: 1. Final Stack: [6]
+  Primary Display: 6
+  Secondary Display: 6 =
+  Infix Tokens: [6]
+  Last Num: false, Last Op: true, Last Const: false, Last Eq: true
+]]></system-out>
+  </testcase>
+  <testcase name="testNegativeStart" classname="test.ReproductionTest" time="0.003">
+    <system-out><![CDATA[Engine processing command: -
+  Primary Display: 0
+  Secondary Display: -
+  Infix Tokens: [-]
+  Last Num: false, Last Op: true, Last Const: false, Last Eq: false
+Engine processing command: 5
+  Primary Display: -5
+  Secondary Display: -5
+  Infix Tokens: [-5]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: false
+Engine processing command: +
+  Primary Display: 0
+  Secondary Display: -5 +
+  Infix Tokens: [-5, +]
+  Last Num: false, Last Op: true, Last Const: false, Last Eq: false
+Engine processing command: 3
+  Primary Display: 3
+  Secondary Display: -5 + 3
+  Infix Tokens: [-5, +, 3]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: false
+Engine processing command: =
+InfixToPostfixConverter Debug: Processing token: '-5' (Last Token Type: START)
+InfixToPostfixConverter Debug:   - Identified as NUMERIC
+InfixToPostfixConverter Debug: Processing token: '+' (Last Token Type: NUMBER)
+InfixToPostfixConverter Debug:   - Identified as OPERATOR
+InfixToPostfixConverter Debug: Processing token: '3' (Last Token Type: OPERATOR)
+InfixToPostfixConverter Debug:   - Identified as NUMERIC
+InfixToPostfixConverter Debug: Infix: [-5, +, 3] -> Postfix: [-5, 3, +]
+PostfixEvaluator Debug: Starting evaluation for tokens: [-5, 3, +]
+PostfixEvaluator Debug:   Processing token: '-5'
+PostfixEvaluator Debug:     -> Pushed Number: -5. Current Stack: [-5]
+PostfixEvaluator Debug:   End of token processing. Stack: [-5]
+PostfixEvaluator Debug:   Processing token: '3'
+PostfixEvaluator Debug:     -> Pushed Number: 3. Current Stack: [-5, 3]
+PostfixEvaluator Debug:   End of token processing. Stack: [-5, 3]
+PostfixEvaluator Debug:   Processing token: '+'
+PostfixEvaluator Debug:     - Identified as OPERATOR: + (Type: BINARY)
+PostfixEvaluator Debug:     - Popped for binary op: -5, 3
+PostfixEvaluator Debug:     -> Pushed Binary Result: -2. Current Stack: [-2]
+PostfixEvaluator Debug:   End of token processing. Stack: [-2]
+PostfixEvaluator Debug: Evaluation complete. Final stack size: 1. Final Stack: [-2]
+  Primary Display: -2
+  Secondary Display: -2 =
+  Infix Tokens: [-2]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: true
+]]></system-out>
+  </testcase>
+  <testcase name="testNegativeNumber_Subtraction" classname="test.ReproductionTest" time="0.002">
+    <system-out><![CDATA[Engine processing command: 5
+  Primary Display: 5
+  Secondary Display: 5
+  Infix Tokens: [5]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: false
+Engine processing command: -
+  Primary Display: 0
+  Secondary Display: 5 -
+  Infix Tokens: [5, -]
+  Last Num: false, Last Op: true, Last Const: false, Last Eq: false
+Engine processing command: 3
+  Primary Display: 3
+  Secondary Display: 5 - 3
+  Infix Tokens: [5, -, 3]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: false
+Engine processing command: =
+InfixToPostfixConverter Debug: Processing token: '5' (Last Token Type: START)
+InfixToPostfixConverter Debug:   - Identified as NUMERIC
+InfixToPostfixConverter Debug: Processing token: '-' (Last Token Type: NUMBER)
+InfixToPostfixConverter Debug:   - Identified as OPERATOR
+InfixToPostfixConverter Debug: Processing token: '3' (Last Token Type: OPERATOR)
+InfixToPostfixConverter Debug:   - Identified as NUMERIC
+InfixToPostfixConverter Debug: Infix: [5, -, 3] -> Postfix: [5, 3, -]
+PostfixEvaluator Debug: Starting evaluation for tokens: [5, 3, -]
+PostfixEvaluator Debug:   Processing token: '5'
+PostfixEvaluator Debug:     -> Pushed Number: 5. Current Stack: [5]
+PostfixEvaluator Debug:   End of token processing. Stack: [5]
+PostfixEvaluator Debug:   Processing token: '3'
+PostfixEvaluator Debug:     -> Pushed Number: 3. Current Stack: [5, 3]
+PostfixEvaluator Debug:   End of token processing. Stack: [5, 3]
+PostfixEvaluator Debug:   Processing token: '-'
+PostfixEvaluator Debug:     - Identified as OPERATOR: - (Type: BINARY)
+PostfixEvaluator Debug:     - Popped for binary op: 5, 3
+PostfixEvaluator Debug:     -> Pushed Binary Result: 2. Current Stack: [2]
+PostfixEvaluator Debug:   End of token processing. Stack: [2]
+PostfixEvaluator Debug: Evaluation complete. Final stack size: 1. Final Stack: [2]
+  Primary Display: 2
+  Secondary Display: 2 =
+  Infix Tokens: [2]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: true
+]]></system-out>
+  </testcase>
+  <testcase name="testNegativeNumber_Multiplication" classname="test.ReproductionTest" time="0.003">
+    <system-out><![CDATA[Engine processing command: 5
+  Primary Display: 5
+  Secondary Display: 5
+  Infix Tokens: [5]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: false
+Engine processing command: *
+  Primary Display: 0
+  Secondary Display: 5 *
+  Infix Tokens: [5, *]
+  Last Num: false, Last Op: true, Last Const: false, Last Eq: false
+Engine processing command: -
+  Primary Display: 0
+  Secondary Display: 5 * -
+  Infix Tokens: [5, *, -]
+  Last Num: false, Last Op: true, Last Const: false, Last Eq: false
+Engine processing command: 3
+  Primary Display: -3
+  Secondary Display: 5 * -3
+  Infix Tokens: [5, *, -3]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: false
+Engine processing command: =
+InfixToPostfixConverter Debug: Processing token: '5' (Last Token Type: START)
+InfixToPostfixConverter Debug:   - Identified as NUMERIC
+InfixToPostfixConverter Debug: Processing token: '*' (Last Token Type: NUMBER)
+InfixToPostfixConverter Debug:   - Identified as OPERATOR
+InfixToPostfixConverter Debug: Processing token: '-3' (Last Token Type: OPERATOR)
+InfixToPostfixConverter Debug:   - Identified as NUMERIC
+InfixToPostfixConverter Debug: Infix: [5, *, -3] -> Postfix: [5, -3, *]
+PostfixEvaluator Debug: Starting evaluation for tokens: [5, -3, *]
+PostfixEvaluator Debug:   Processing token: '5'
+PostfixEvaluator Debug:     -> Pushed Number: 5. Current Stack: [5]
+PostfixEvaluator Debug:   End of token processing. Stack: [5]
+PostfixEvaluator Debug:   Processing token: '-3'
+PostfixEvaluator Debug:     -> Pushed Number: -3. Current Stack: [5, -3]
+PostfixEvaluator Debug:   End of token processing. Stack: [5, -3]
+PostfixEvaluator Debug:   Processing token: '*'
+PostfixEvaluator Debug:     - Identified as OPERATOR: * (Type: BINARY)
+PostfixEvaluator Debug:     - Popped for binary op: 5, -3
+PostfixEvaluator Debug:     -> Pushed Binary Result: -15. Current Stack: [-15]
+PostfixEvaluator Debug:   End of token processing. Stack: [-15]
+PostfixEvaluator Debug: Evaluation complete. Final stack size: 1. Final Stack: [-15]
+  Primary Display: -15
+  Secondary Display: -15 =
+  Infix Tokens: [-15]
+  Last Num: true, Last Op: false, Last Const: false, Last Eq: true
+]]></system-out>
+  </testcase>
+</testsuite>

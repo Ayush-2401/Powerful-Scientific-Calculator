@@ -1,0 +1,11 @@
+com\scientificcalculator\engine\CalculatorEngine.class
+com\scientificcalculator\engine\PostfixEvaluator.class
+com\scientificcalculator\engine\Operators$Operator.class
+com\scientificcalculator\server\WebServer$CalculateHandler.class
+com\scientificcalculator\engine\InfixToPostfixConverter.class
+com\scientificcalculator\engine\Operators.class
+com\scientificcalculator\engine\Operators$Type.class
+com\scientificcalculator\engine\CalculatorEngine$Complex.class
+com\scientificcalculator\engine\ConstantsLoader.class
+com\scientificcalculator\engine\Operators$Associativity.class
+com\scientificcalculator\server\WebServer.class

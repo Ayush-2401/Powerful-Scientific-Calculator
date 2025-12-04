@@ -1,0 +1,3 @@
+com\scientificcalculator\engine\PostfixEvaluatorTest.class
+com\scientificcalculator\engine\CalculatorEngineTest.class
+com\scientificcalculator\engine\InfixToPostfixConverterTest.class
