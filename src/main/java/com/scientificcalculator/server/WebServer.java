@@ -35,8 +35,9 @@ public class WebServer {
     private final Map<String, Map<String, double[][]>> sessionMatrices = new ConcurrentHashMap<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         new WebServer().start();
+        Thread.currentThread().join();
     }
 
     public void start() throws IOException {
