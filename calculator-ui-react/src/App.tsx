@@ -313,7 +313,7 @@ function App() {
     };
 
     // Add extra params based on the operation selected
-    if (matrixOp === 'multiply' || matrixOp === 'hadamard_product' || matrixOp === 'hadamard_division' || matrixOp === 'kronecker_product' || matrixOp === 'direct_sum') {
+    if (['add', 'subtract', 'multiply', 'hadamard_product', 'hadamard_division', 'kronecker_product', 'direct_sum'].includes(matrixOp)) {
       payload.matrixB = parseMat(matrixB, matrixRowsB, matrixColsB);
     } else if (matrixOp === 'solve' || matrixOp === 'cramer' || matrixOp === 'lu_solve' || matrixOp === 'least_squares') {
       payload.vectorB = parseVec(vectorB, matrixRowsA);
@@ -1255,6 +1255,8 @@ function App() {
                     }}
                   >
                     <optgroup label="Arithmetic">
+                      <option value="add">A + B (Addition)</option>
+                      <option value="subtract">A - B (Subtraction)</option>
                       <option value="multiply">A × B (Multiplication)</option>
                       <option value="scalar_multiply">k · A (Scalar Product)</option>
                       <option value="hadamard_product">A ⊙ B (Hadamard Product)</option>
@@ -1417,7 +1419,7 @@ function App() {
                   </div>
 
                   {/* MATRIX B */}
-                  {(matrixOp === 'multiply' || matrixOp === 'hadamard_product' || matrixOp === 'hadamard_division' || matrixOp === 'kronecker_product' || matrixOp === 'direct_sum') && (
+                  {['add', 'subtract', 'multiply', 'hadamard_product', 'hadamard_division', 'kronecker_product', 'direct_sum'].includes(matrixOp) && (
                     <div className="matrix-box">
                       <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center', marginBottom: '4px' }}>
                         <h4>Matrix B ({matrixRowsB}×{matrixColsB})</h4>
