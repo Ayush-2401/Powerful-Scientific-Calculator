@@ -31,6 +31,8 @@ public class WebServer {
     private static final int PORT = 8080;
     // Session storage: Map<SessionID, CalculatorEngine>
     private final Map<String, CalculatorEngine> sessionEngines = new ConcurrentHashMap<>();
+    // Session matrices: Map<SessionID, Map<String, double[][]>>
+    private final Map<String, Map<String, double[][]>> sessionMatrices = new ConcurrentHashMap<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public static void main(String[] args) throws IOException {
@@ -196,7 +198,7 @@ public class WebServer {
         public void handle(HttpExchange exchange) throws IOException {
             exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
             exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "POST, OPTIONS");
-            exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type, X-Session-ID");
 
             if ("OPTIONS".equals(exchange.getRequestMethod())) {
                 exchange.sendResponseHeaders(204, -1);
@@ -205,6 +207,11 @@ public class WebServer {
 
             if ("POST".equals(exchange.getRequestMethod())) {
                 try (InputStream is = exchange.getRequestBody()) {
+                    String sessionId = exchange.getRequestHeaders().getFirst("X-Session-ID");
+                    if (sessionId == null || sessionId.isEmpty()) {
+                        sessionId = "default";
+                    }
+
                     String requestBody = new String(is.readAllBytes(), StandardCharsets.UTF_8);
                     Map<String, Object> requestMap = objectMapper.readValue(requestBody, HashMap.class);
                     String operation = (String) requestMap.get("operation");
@@ -216,70 +223,225 @@ public class WebServer {
 
                     Map<String, Object> responseMap = new HashMap<>();
 
-                    if (operation.equals("solve")) {
-                        List<List<Number>> matrixAList = (List<List<Number>>) requestMap.get("matrixA");
-                        List<Number> vectorBList = (List<Number>) requestMap.get("vectorB");
-                        if (matrixAList == null || vectorBList == null) {
-                            sendResponse(exchange, 400, "{\"error\":\"matrixA and vectorB are required for solve.\"}");
+                    if (operation.equals("store")) {
+                        String name = (String) requestMap.get("name");
+                        double[][] A = getMatrixFromParam(requestMap.get("matrix"), sessionId);
+                        if (name == null || A == null) {
+                            sendResponse(exchange, 400, "{\"error\":\"name and matrix are required for store.\"}");
                             return;
                         }
-                        int n = vectorBList.size();
-                        double[][] A = new double[n][n];
-                        double[] b = new double[n];
-                        for (int i = 0; i < n; i++) {
-                            b[i] = vectorBList.get(i).doubleValue();
-                            for (int j = 0; j < n; j++) {
-                                A[i][j] = matrixAList.get(i).get(j).doubleValue();
+                        sessionMatrices.computeIfAbsent(sessionId, id -> new ConcurrentHashMap<>()).put(name, A);
+                        responseMap.put("status", "success");
+                        responseMap.put("storedName", name);
+                    } else if (operation.equals("preset")) {
+                        String name = (String) requestMap.get("name");
+                        int rows = ((Number) requestMap.get("rows")).intValue();
+                        int cols = ((Number) requestMap.get("cols")).intValue();
+                        List<Number> paramsList = (List<Number>) requestMap.get("params");
+                        double[] params = null;
+                        if (paramsList != null) {
+                            params = new double[paramsList.size()];
+                            for (int i = 0; i < paramsList.size(); i++) {
+                                params[i] = paramsList.get(i).doubleValue();
                             }
                         }
-                        double[] x = MatrixMath.solveSystem(A, b);
+                        double[][] result = MatrixMath.generatePreset(name, rows, cols, params);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("add")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] B = getMatrixFromParam(requestMap.get("matrixB"), sessionId);
+                        double[][] result = MatrixMath.add(A, B);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("subtract")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] B = getMatrixFromParam(requestMap.get("matrixB"), sessionId);
+                        double[][] result = MatrixMath.subtract(A, B);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("multiply")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] B = getMatrixFromParam(requestMap.get("matrixB"), sessionId);
+                        double[][] result = MatrixMath.multiply(A, B);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("scalarMultiply")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double k = ((Number) requestMap.get("scalar")).doubleValue();
+                        double[][] result = MatrixMath.scalarMultiply(A, k);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("hadamardProduct")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] B = getMatrixFromParam(requestMap.get("matrixB"), sessionId);
+                        double[][] result = MatrixMath.hadamardProduct(A, B);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("hadamardDivide")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] B = getMatrixFromParam(requestMap.get("matrixB"), sessionId);
+                        double[][] result = MatrixMath.hadamardDivide(A, B);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("power")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        int p = ((Number) requestMap.get("power")).intValue();
+                        double[][] result = MatrixMath.power(A, p);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("kronecker")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] B = getMatrixFromParam(requestMap.get("matrixB"), sessionId);
+                        double[][] result = MatrixMath.kroneckerProduct(A, B);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("directSum")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] B = getMatrixFromParam(requestMap.get("matrixB"), sessionId);
+                        double[][] result = MatrixMath.directSum(A, B);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("transpose")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] result = MatrixMath.transpose(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("determinant")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double result = MatrixMath.determinant(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("minors")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] result = MatrixMath.minors(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("cofactors")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] result = MatrixMath.cofactors(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("adjugate")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] result = MatrixMath.adjugate(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("permanent")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double result = MatrixMath.permanent(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("cofactorExpansionSteps")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        int index = ((Number) requestMap.get("index")).intValue();
+                        boolean isRow = (Boolean) requestMap.get("isRow");
+                        Map<String, Object> result = MatrixMath.cofactorExpansionSteps(A, index, isRow);
+                        responseMap.putAll(result);
+                    } else if (operation.equals("inverse")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] result = MatrixMath.invert(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("leftInverse")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] result = MatrixMath.leftInverse(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("rightInverse")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] result = MatrixMath.rightInverse(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("ref")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] result = MatrixMath.ref(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("rref")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] result = MatrixMath.rref(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("rrefSteps")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        Map<String, Object> result = MatrixMath.rrefWithSteps(A);
+                        responseMap.putAll(result);
+                    } else if (operation.equals("rank")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        int result = MatrixMath.rank(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("nullity")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        int result = MatrixMath.nullity(A);
+                        responseMap.put("result", result);
+                    } else if (operation.equals("subspaces")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        responseMap.put("rowSpace", MatrixMath.rowSpace(A));
+                        responseMap.put("columnSpace", MatrixMath.columnSpace(A));
+                        responseMap.put("nullSpace", MatrixMath.nullSpace(A));
+                        responseMap.put("leftNullSpace", MatrixMath.leftNullSpace(A));
+                    } else if (operation.equals("solve") || operation.equals("solveLU")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[] b = getVectorFromParam(requestMap.get("vectorB"));
+                        double[] x = MatrixMath.solveLU(A, b);
                         List<Double> xList = new ArrayList<>();
                         for (double val : x) xList.add(val);
                         responseMap.put("solution", xList);
+                    } else if (operation.equals("solveCramer")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[] b = getVectorFromParam(requestMap.get("vectorB"));
+                        double[] x = MatrixMath.solveCramer(A, b);
+                        List<Double> xList = new ArrayList<>();
+                        for (double val : x) xList.add(val);
+                        responseMap.put("solution", xList);
+                    } else if (operation.equals("solveLeastSquares")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[] b = getVectorFromParam(requestMap.get("vectorB"));
+                        double[] x = MatrixMath.solveLeastSquares(A, b);
+                        List<Double> xList = new ArrayList<>();
+                        for (double val : x) xList.add(val);
+                        responseMap.put("solution", xList);
+                    } else if (operation.equals("decomposeLU")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        Map<String, double[][]> decomp = MatrixMath.decomposeLU(A);
+                        responseMap.put("L", decomp.get("L"));
+                        responseMap.put("U", decomp.get("U"));
+                        responseMap.put("P", decomp.get("P"));
+                    } else if (operation.equals("decomposeQR")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        Map<String, double[][]> decomp = MatrixMath.decomposeQR(A);
+                        responseMap.put("Q", decomp.get("Q"));
+                        responseMap.put("R", decomp.get("R"));
+                    } else if (operation.equals("decomposeCholesky")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[][] L = MatrixMath.decomposeCholesky(A);
+                        responseMap.put("L", L);
+                    } else if (operation.equals("characteristicPolynomial")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double[] coeff = MatrixMath.characteristicPolynomial(A);
+                        responseMap.put("result", coeff);
+                    } else if (operation.equals("eigenvalues")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        MatrixMath.Complex[] ev = MatrixMath.eigenvalues(A);
+                        List<Map<String, Double>> list = new ArrayList<>();
+                        for (MatrixMath.Complex val : ev) {
+                            Map<String, Double> cMap = new HashMap<>();
+                            cMap.put("re", val.re);
+                            cMap.put("im", val.im);
+                            list.add(cMap);
+                        }
+                        responseMap.put("result", list);
+                    } else if (operation.equals("eigenvectors")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        double lambda = ((Number) requestMap.get("lambda")).doubleValue();
+                        List<double[]> list = MatrixMath.eigenvectors(A, lambda);
+                        responseMap.put("result", list);
+                    } else if (operation.equals("eigen")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        MatrixMath.Complex[] ev = MatrixMath.eigenvalues(A);
+                        List<Map<String, Double>> listEV = new ArrayList<>();
+                        List<List<double[]>> listVectors = new ArrayList<>();
+                        for (MatrixMath.Complex val : ev) {
+                            Map<String, Double> cMap = new HashMap<>();
+                            cMap.put("re", val.re);
+                            cMap.put("im", val.im);
+                            listEV.add(cMap);
+                            if (Math.abs(val.im) < 1e-9) {
+                                listVectors.add(MatrixMath.eigenvectors(A, val.re));
+                            } else {
+                                listVectors.add(new ArrayList<>());
+                            }
+                        }
+                        responseMap.put("eigenvalues", listEV);
+                        responseMap.put("eigenvectors", listVectors);
+                    } else if (operation.equals("properties")) {
+                        double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
+                        responseMap.put("trace", MatrixMath.trace(A));
+                        responseMap.put("norms", MatrixMath.norms(A));
+                        responseMap.put("classification", MatrixMath.classifyMatrix(A));
                     } else {
-                        List<List<Number>> matrixAList = (List<List<Number>>) requestMap.get("matrixA");
-                        if (matrixAList == null) {
-                            sendResponse(exchange, 400, "{\"error\":\"matrixA is required.\"}");
-                            return;
-                        }
-                        int r1 = matrixAList.size();
-                        int c1 = matrixAList.get(0).size();
-                        double[][] A = new double[r1][c1];
-                        for (int i = 0; i < r1; i++) {
-                            for (int j = 0; j < c1; j++) {
-                                A[i][j] = matrixAList.get(i).get(j).doubleValue();
-                            }
-                        }
-
-                        if (operation.equals("multiply")) {
-                            List<List<Number>> matrixBList = (List<List<Number>>) requestMap.get("matrixB");
-                            if (matrixBList == null) {
-                                sendResponse(exchange, 400, "{\"error\":\"matrixB is required for multiplication.\"}");
-                                return;
-                            }
-                            int r2 = matrixBList.size();
-                            int c2 = matrixBList.get(0).size();
-                            double[][] B = new double[r2][c2];
-                            for (int i = 0; i < r2; i++) {
-                                for (int j = 0; j < c2; j++) {
-                                    B[i][j] = matrixBList.get(i).get(j).doubleValue();
-                                }
-                            }
-                            double[][] result = MatrixMath.multiply(A, B);
-                            responseMap.put("result", result);
-                        } else if (operation.equals("transpose")) {
-                            double[][] result = MatrixMath.transpose(A);
-                            responseMap.put("result", result);
-                        } else if (operation.equals("determinant")) {
-                            double result = MatrixMath.determinant(A);
-                            responseMap.put("result", result);
-                        } else if (operation.equals("inverse")) {
-                            double[][] result = MatrixMath.invert(A);
-                            responseMap.put("result", result);
-                        } else {
-                            sendResponse(exchange, 400, "{\"error\":\"Unknown matrix operation: " + operation + "\"}");
-                            return;
-                        }
+                        sendResponse(exchange, 400, "{\"error\":\"Unknown matrix operation: " + operation + "\"}");
+                        return;
                     }
 
                     sendResponse(exchange, 200, objectMapper.writeValueAsString(responseMap));
@@ -290,6 +452,43 @@ public class WebServer {
             } else {
                 sendResponse(exchange, 405, "{\"error\":\"Method not allowed\"}");
             }
+        }
+
+        private double[][] getMatrixFromParam(Object param, String sessionId) {
+            if (param == null) return null;
+            if (param instanceof String) {
+                String name = (String) param;
+                Map<String, double[][]> matrices = sessionMatrices.get(sessionId);
+                if (matrices != null && matrices.containsKey(name)) {
+                    return matrices.get(name);
+                }
+                throw new IllegalArgumentException("Stored matrix '" + name + "' not found in session.");
+            } else if (param instanceof List) {
+                List<List<Number>> list = (List<List<Number>>) param;
+                int r = list.size();
+                int c = list.get(0).size();
+                double[][] res = new double[r][c];
+                for (int i = 0; i < r; i++) {
+                    for (int j = 0; j < c; j++) {
+                        res[i][j] = list.get(i).get(j).doubleValue();
+                    }
+                }
+                return res;
+            }
+            throw new IllegalArgumentException("Invalid matrix parameter type.");
+        }
+
+        private double[] getVectorFromParam(Object param) {
+            if (param == null) return null;
+            if (param instanceof List) {
+                List<Number> list = (List<Number>) param;
+                double[] res = new double[list.size()];
+                for (int i = 0; i < list.size(); i++) {
+                    res[i] = list.get(i).doubleValue();
+                }
+                return res;
+            }
+            throw new IllegalArgumentException("Invalid vector parameter.");
         }
 
         private void sendResponse(HttpExchange exchange, int statusCode, String response) throws IOException {
