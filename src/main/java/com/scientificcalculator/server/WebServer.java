@@ -245,6 +245,7 @@ public class WebServer {
                     else if (operation.equals("cholesky")) mappedOperation = "decomposeCholesky";
                     else if (operation.equals("char_poly")) mappedOperation = "characteristicPolynomial";
                     else if (operation.equals("auto_detect_type")) mappedOperation = "classifyMatrix";
+                    else if (operation.equals("norms")) mappedOperation = "properties";
 
                     if (operation.equals("store")) {
                         String name = (String) requestMap.get("name");
@@ -571,12 +572,13 @@ public class WebServer {
                     } else if (mappedOperation.equals("eigenvalues")) {
                         double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
                         MatrixMath.Complex[] ev = MatrixMath.eigenvalues(A);
-                        List<Map<String, Double>> list = new ArrayList<>();
+                        List<Object> list = new ArrayList<>();
                         for (MatrixMath.Complex val : ev) {
-                            Map<String, Double> cMap = new HashMap<>();
-                            cMap.put("re", val.re);
-                            cMap.put("im", val.im);
-                            list.add(cMap);
+                            if (Math.abs(val.im) < 1e-9) {
+                                list.add(val.re);
+                            } else {
+                                list.add(formatComplex(val));
+                            }
                         }
                         responseMap.put("result", list);
                     } else if (mappedOperation.equals("eigenvectors")) {
@@ -587,17 +589,18 @@ public class WebServer {
                     } else if (mappedOperation.equals("eigen")) {
                         double[][] A = getMatrixFromParam(requestMap.get("matrixA"), sessionId);
                         MatrixMath.Complex[] ev = MatrixMath.eigenvalues(A);
-                        List<Map<String, Double>> listEV = new ArrayList<>();
+                        List<Object> listEV = new ArrayList<>();
                         List<double[]> listVectors = new ArrayList<>();
                         
                         double[] charPolyCoeffs = MatrixMath.characteristicPolynomial(A);
                         String charPolyStr = formatCharPoly(charPolyCoeffs);
                         
                         for (MatrixMath.Complex val : ev) {
-                            Map<String, Double> cMap = new HashMap<>();
-                            cMap.put("re", val.re);
-                            cMap.put("im", val.im);
-                            listEV.add(cMap);
+                            if (Math.abs(val.im) < 1e-9) {
+                                listEV.add(val.re);
+                            } else {
+                                listEV.add(formatComplex(val));
+                            }
                             
                             if (Math.abs(val.im) < 1e-9) {
                                 List<double[]> vecs = MatrixMath.eigenvectors(A, val.re);
@@ -743,6 +746,16 @@ public class WebServer {
                 first = false;
             }
             return sb.toString();
+        }
+
+        private String formatComplex(MatrixMath.Complex c) {
+            String reStr = formatDouble(c.re);
+            String imStr = formatDouble(Math.abs(c.im));
+            if (c.im >= 0) {
+                return reStr + " + " + imStr + "i";
+            } else {
+                return reStr + " - " + imStr + "i";
+            }
         }
 
         private void sendResponse(HttpExchange exchange, int statusCode, String response) throws IOException {
