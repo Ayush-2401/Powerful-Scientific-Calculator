@@ -11,6 +11,7 @@ import java.lang.Math;
 import java.util.LinkedHashMap;
 import java.text.DecimalFormat;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class CalculatorEngine {
 
@@ -245,8 +246,16 @@ public class CalculatorEngine {
 
     private String formatResult(BigDecimal value) {
         // Strip trailing zeros and avoid scientific notation for small numbers if
-        // possible
-        return value.stripTrailingZeros().toPlainString();
+        // possible. Limit to 15 digits of precision.
+        // Prevent extremely large precision output (e.g. 1/3)
+        try {
+            if (value.scale() > 15) {
+                value = value.setScale(15, RoundingMode.HALF_UP);
+            }
+            return value.stripTrailingZeros().toPlainString();
+        } catch (Exception e) {
+            return value.toPlainString();
+        }
     }
 
     private String formatResult(double value) {
@@ -254,7 +263,8 @@ public class CalculatorEngine {
             return "Error";
         if (Double.isInfinite(value))
             return "Infinity";
-        return new DecimalFormat("0.##########").format(value);
+        // Limit to 15 decimal places
+        return new DecimalFormat("0.###############").format(value);
     }
 
     private String formatComplex(Complex c) {
