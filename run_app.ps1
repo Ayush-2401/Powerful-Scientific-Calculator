@@ -5,7 +5,7 @@ $projectRoot = Get-Location
 
 # 1. Start the Backend Server in a new PowerShell window
 Write-Host "Launching Backend Server (Maven)..." -ForegroundColor Green
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$projectRoot'; mvn compile exec:java"
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$projectRoot'; .\maven\apache-maven-3.9.16\bin\mvn compile exec:java"
 
 # 2. Start the Frontend in a new PowerShell window
 Write-Host "Launching Frontend (React)..." -ForegroundColor Green
