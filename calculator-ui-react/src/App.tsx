@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+import { GraphSandbox } from './components/GraphSandbox/GraphSandbox';
+import { GeometryBoard } from './components/GeometryBoard/GeometryBoard';
 
 // Database of Scientific Constants matching constants.json
 const CONSTANTS = {
@@ -59,8 +61,8 @@ function App() {
   const [sessionId, setSessionId] = useState("");
   const [isDegreesMode, setIsDegreesMode] = useState(true);
 
-  // Active Tab Workspace: calculator | solvers | grapher | matrices | converter
-  const [activeTab, setActiveTab] = useState<'calculator' | 'solvers' | 'grapher' | 'matrices' | 'converter'>('calculator');
+  // Active Tab Workspace: calculator | solvers | grapher | matrices | converter | sandbox | geometry
+  const [activeTab, setActiveTab] = useState<'calculator' | 'solvers' | 'grapher' | 'matrices' | 'converter' | 'sandbox' | 'geometry'>('calculator');
 
   // History Panels
   const [history, setHistory] = useState<string[]>([]);
@@ -886,6 +888,18 @@ function App() {
           >
             Converter
           </button>
+          <button 
+            className={`tab-btn ${activeTab === 'sandbox' ? 'active' : ''}`}
+            onClick={() => setActiveTab('sandbox')}
+          >
+            Graph Sandbox
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'geometry' ? 'active' : ''}`}
+            onClick={() => setActiveTab('geometry')}
+          >
+            Geometry Board
+          </button>
         </nav>
 
         {/* COMPACT GLOBAL CONSTANTS DROPDOWN */}
@@ -1615,6 +1629,14 @@ function App() {
                   </div>
                 </div>
               </div>
+            )}
+
+            {activeTab === 'sandbox' && (
+              <GraphSandbox />
+            )}
+
+            {activeTab === 'geometry' && (
+              <GeometryBoard />
             )}
 
           </div>
