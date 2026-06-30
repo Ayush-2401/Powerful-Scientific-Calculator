@@ -42,4 +42,10 @@ mvn test
 -   **High Precision**: Uses `BigDecimal` for accurate calculations.
 -   **Session Management**: Supports multiple concurrent users.
 -   **Scientific Functions**: Trigonometry, logarithms, exponents, and more.
+-   **Interactive Graphing Sandbox**: A robust workspace for visual mathematics supporting:
+    -   *Plotting Modes*: Explicit, Implicit, Parametric, and 3D graphing.
+    -   *Calculus Visualizer*: Live tangent lines, Riemann sums, and definite integration overlays.
+    -   *Parameter Sliders*: Dynamic slider controls for evaluating equations with varying variables.
+    -   *Regression Analysis*: Fit linear and quadratic curves directly to input data points.
 -   **Modern UI**: Responsive, dark-themed interface.
+
