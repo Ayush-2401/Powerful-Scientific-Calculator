@@ -850,7 +850,7 @@ function App() {
       {/* HEADER SECTION */}
       <header className="app-header">
         <div className="brand-section">
-          <h1>Antigravity Calc</h1>
+          <h1>NovCalc</h1>
           <span>Scientific Workspace</span>
         </div>
 
